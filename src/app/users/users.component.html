@@ -1,0 +1,18 @@
+<h3>Maintain Users</h3>
+
+<button class="flat-button" routerLink="/add-user">Add User</button>
+<span>&nbsp; &nbsp;</span>
+<button class="flat-button" (click)="deleteSelectedIds()">Delete selected User/s</button>
+<mat-grid-list cols="5" rowHeight="30px">
+    <form [formGroup]="myForm">
+        @for (user of users$ | async; track user.id) {
+            <mat-grid-tile colspan="1">{{ user.id }}</mat-grid-tile>
+            <a (click)="sendToUpdateUser(user.id, user.name)">
+            <mat-grid-tile colspan="3" class="namelink">{{ user.name }}</mat-grid-tile>
+            </a>
+            <mat-grid-tile colspan="1">
+                <input type="checkbox" [value]="user.id" (change)="onCheckboxChange($event, user.id!)">
+            </mat-grid-tile>
+        }
+    </form>
+</mat-grid-list>

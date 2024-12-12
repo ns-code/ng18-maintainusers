@@ -1,0 +1,24 @@
+
+button {
+    margin-bottom: 6px;
+}
+
+mat-grid-list {
+    width: 150px;
+}
+
+mat-grid-tile {
+    background: lightblue;
+    border: 1;
+}
+
+.flat-button {
+    border: 1;
+    border-color: black;
+    border-radius: 6px;
+    background: rgb(238, 177, 230);
+} 
+
+.namelink:hover {
+    cursor: pointer;
+}

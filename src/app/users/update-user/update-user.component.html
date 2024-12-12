@@ -1,0 +1,8 @@
+<h3>Update User</h3>
+
+<form class="user-form">
+    <label for="name">Name: </label>
+    <input id="name" type="text" [formControl]="name">
+
+    <button class="flat-button" (click)="updateUser($event)">Update User</button>
+</form>
