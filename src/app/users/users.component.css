@@ -4,7 +4,7 @@ button {
 }
 
 mat-grid-list {
-    width: 150px;
+    width: 80%;
 }
 
 mat-grid-tile {
@@ -19,6 +19,14 @@ mat-grid-tile {
     background: rgb(238, 177, 230);
 } 
 
-.namelink:hover {
+.hvrPtr:hover {
     cursor: pointer;
+}
+
+.hdrRow {
+    font-weight: 600;
+}
+
+.errmsg {
+    color: red;
 }

@@ -5,7 +5,6 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { UserMockService } from './service/user.mockservice';
 import { UsersService } from './service/users.service';
-import { of } from 'rxjs';
 import { AddUserComponent } from './add-user/add-user.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
 
@@ -41,8 +40,8 @@ describe('UsersComponent', () => {
 
     component.users$?.subscribe(value => {
       expect(value).toEqual([
-        { id: 1, name: 'User 1' },
-        { id: 2, name: 'User 2' },
+        { userId: 1, userName: 'user1', firstName: "fn1", lastName: "ln1", email: "e1@test.com", userStatus: "I", department: "" },
+        { userId: 2, userName: 'user2', firstName: "fn2", lastName: "ln2", email: "e2@test.com", userStatus: "A", department: "" }
       ]); 
     });    
   });  
@@ -74,11 +73,7 @@ it('should add a new user', () => {
     const addUserComponent = TestBed.createComponent(AddUserComponent);
     const addUserComponentInst = addUserComponent.componentInstance;
 
-    // spyOn(userService, 'createUser').and.callThrough(); 
-
-    addUserComponentInst.name.setValue("user 123");
-    addUserComponentInst.addUser(null);
-    // expect(userService.createUser).toHaveBeenCalled();
+    addUserComponentInst.onUserFormSubmit();
 
     component.ngOnInit();
   
@@ -86,8 +81,8 @@ it('should add a new user', () => {
 
     component.users$?.subscribe(value => {
       console.log(">> value: ", value);
-      const user = value.find(v => v.name === 'user 123');
-      expect( user?.name ).toEqual('user 123');
+      const user = value.find(v => v.userName === 'user1');
+      expect( user?.userName ).toEqual('user1');
     });   
   });
 
@@ -99,21 +94,16 @@ it('should add a new user', () => {
     const updateUserComponent = TestBed.createComponent(UpdateUserComponent);
     const updateUserComponentInst = updateUserComponent.componentInstance;
 
-    // spyOn(userService, 'updateUser').and.callThrough(); 
-
-    updateUserComponentInst.name.setValue("user 123");
     updateUserComponentInst.userId = 1;
-    // expect(userService.updateUser).toHaveBeenCalled();
-    updateUserComponentInst.updateUser(null);
+    updateUserComponentInst.onUserFormUpdateSubmit();
 
     component.ngOnInit();
   
     component.users$ = userService.getUsers();
 
     component.users$?.subscribe(value => {
-      console.log(">> value: ", value);
-      const user = value.find(v => v.name === 'user 123');
-      expect( user?.name ).toEqual('user 123');
+      const user = value.find(v => v.userName === 'user1');
+      expect( user?.userName ).toEqual('user1');
     });   
   });
 

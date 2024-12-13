@@ -1,18 +1,37 @@
 <h3>Maintain Users</h3>
 
-<button class="flat-button" routerLink="/add-user">Add User</button>
+<button class="flat-button hvrPtr" routerLink="/add-user">Add User</button>
 <span>&nbsp; &nbsp;</span>
-<button class="flat-button" (click)="deleteSelectedIds()">Delete selected User/s</button>
-<mat-grid-list cols="5" rowHeight="30px">
+<button class="flat-button hvrPtr" (click)="deleteSelectedIds()">Delete selected User/s</button>
+<mat-grid-list cols="18" rowHeight="30px">
+    <ng-container>
+        <mat-grid-tile colspan="1">&nbsp;</mat-grid-tile>
+        <mat-grid-tile colspan="1">&nbsp;</mat-grid-tile>
+        <mat-grid-tile class="hdrRow" colspan="1">User ID</mat-grid-tile>
+        <mat-grid-tile class="hdrRow" colspan="2">User Name</mat-grid-tile>
+        <mat-grid-tile class="hdrRow" colspan="3">First Name</mat-grid-tile>
+        <mat-grid-tile class="hdrRow" colspan="3">Last Name</mat-grid-tile>
+        <mat-grid-tile class="hdrRow" colspan="3">Email</mat-grid-tile>
+        <mat-grid-tile class="hdrRow" colspan="1">User Status</mat-grid-tile>
+        <mat-grid-tile class="hdrRow" colspan="3">Department</mat-grid-tile>            
+    </ng-container>
     <form [formGroup]="myForm">
-        @for (user of users$ | async; track user.id) {
-            <mat-grid-tile colspan="1">{{ user.id }}</mat-grid-tile>
-            <a (click)="sendToUpdateUser(user.id, user.name)">
-            <mat-grid-tile colspan="3" class="namelink">{{ user.name }}</mat-grid-tile>
-            </a>
+        @for (user of users$ | async; track user.userId) {
             <mat-grid-tile colspan="1">
-                <input type="checkbox" [value]="user.id" (change)="onCheckboxChange($event, user.id!)">
+                <input type="checkbox" [value]="user.userId" (change)="onCheckboxChange($event, user.userId!)">
             </mat-grid-tile>
+            <mat-grid-tile colspan="1">
+                <a (click)="sendToUpdateUser(user.userId)"  class="hvrPtr">
+                    <img width="21px" height="23px" src="./assets/pencil.png">
+                </a>
+            </mat-grid-tile>
+            <mat-grid-tile colspan="1">{{ user.userId }}</mat-grid-tile>            
+            <mat-grid-tile colspan="2" >{{ user.userName }}</mat-grid-tile>
+            <mat-grid-tile colspan="3">{{ user.firstName }}</mat-grid-tile>
+            <mat-grid-tile colspan="3">{{ user.lastName }}</mat-grid-tile>
+            <mat-grid-tile colspan="3">{{ user.email }}</mat-grid-tile>
+            <mat-grid-tile colspan="1">{{ user.userStatus }}</mat-grid-tile>
+            <mat-grid-tile colspan="3">{{ user.department }}</mat-grid-tile>            
         }
     </form>
 </mat-grid-list>

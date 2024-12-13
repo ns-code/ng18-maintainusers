@@ -3,7 +3,6 @@ import { TestBed } from '@angular/core/testing';
 import { UsersService } from './users.service';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
-import { UserMockService } from './user.mockservice';
 
 describe('UsersService', () => {
   let service: UsersService;

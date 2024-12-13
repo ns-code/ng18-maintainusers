@@ -1,11 +1,27 @@
 interface IUser {
-    id: number  | null;
-    name: string;
+    userId: number | null;
+    userName: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    userStatus: string;
+    department: string | null;
 }
 
 export class User implements IUser {
-    constructor(public id: number | null, public name: string) {
-        this.id = id;
-        this.name = name;
+    constructor(public userId: number | null,
+        public userName: string,
+        public firstName: string,
+        public lastName: string,
+        public email: string,
+        public userStatus: string,
+        public department: string | null) {
+        this.userId = userId;
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.userStatus = userStatus;
+        this.department = department;
     }
 }

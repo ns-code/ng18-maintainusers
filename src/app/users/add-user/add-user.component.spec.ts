@@ -3,12 +3,16 @@ import { RouterModule } from '@angular/router';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { AddUserComponent } from './add-user.component';
+import { UsersService } from '../service/users.service';
+import { UserMockService } from '../service/user.mockservice';
 
 describe('AddUserComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AddUserComponent, RouterModule.forRoot([])],
-      providers: [ provideHttpClient(), provideHttpClientTesting() ],
+      providers: [ provideHttpClient(), provideHttpClientTesting(),
+        { provide: UsersService, useClass: UserMockService }
+       ],
     }).compileComponents();
   });
 
@@ -18,9 +22,21 @@ describe('AddUserComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  // it(`should have the 'ng18-app2' title`, () => {
-  //   const fixture = TestBed.createComponent(UsersComponent);
-  //   const comp = fixture.componentInstance;
-  //   expect(comp.deleteUserRes$).toEqual('ng18-app2');
-  // });
+  it('should display error for User Name conflict', async () => {
+    const fixture = TestBed.createComponent(AddUserComponent);
+    const addCompInst = fixture.componentInstance;
+
+    addCompInst.onUserFormSubmit();  
+    addCompInst.ngOnInit();
+    addCompInst.form.setValue({
+      userName: "user1",
+      firstName: "fn2",
+      lastName: "ln2",
+      email: "user2@test.com",
+      userStatus: "I",
+      department: ""
+    });
+    addCompInst.onUserFormSubmit();  
+    expect(addCompInst.errmsg).toContain("already exists");
+  });
 });

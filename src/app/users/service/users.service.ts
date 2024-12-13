@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { User } from '../data/user.data';
 
 @Injectable({
@@ -20,13 +20,17 @@ export class UsersService {
     return this.http.post<User>(this.API_BASE_URL + '/users', newUser);
   }   
 
-  updateUser(id: number, updatedUser: User): Observable<User> {
-    const url = `/users/${id}`;
+  updateUser(userId: number, updatedUser: User): Observable<User> {
+    const url = `/users/${userId}`;
     return this.http.put<User>(this.API_BASE_URL + url, updatedUser);
   }   
 
-  deleteUser(id: number): Observable<any> {
-    const url = `/users/${id}`;
+  deleteUser(userId: number): Observable<any> {
+    const url = `/users/${userId}`;
     return this.http.delete<any>(this.API_BASE_URL + url);
   }  
+}
+
+export enum UserStatuses {
+  I = "I", A = "A", T = "T"
 }

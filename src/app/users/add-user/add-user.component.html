@@ -1,8 +1,57 @@
 <h3>Add User</h3>
 
-<form class="user-form">
-    <label for="name">Name: </label>
-    <input id="name" type="text" [formControl]="name">
+<div class="errmsg">{{ errmsg }}</div>
+<form class="user-form" [formGroup]="form" (ngSubmit)="onUserFormSubmit()">
+    <label for="userName">User Name: </label>
+    <input id="userName" size="20" maxlength="250" type="text" formControlName="userName">
+    <div *ngIf="form.get('userName')?.invalid && (form.get('userName')?.dirty || form.get('userName')?.touched)">
+        <div *ngIf="form.get('userName')?.hasError('required')">
+          <span class="errmsg">User Name is required.</span>
+        </div>
+        <div *ngIf="form.get('userName')?.hasError('minlength')">
+            <span class="errmsg">Please enter a valid User Name with atleast 3 characters.</span>
+        </div>
+    </div>
+    <br>
+    <label for="firstName">First Name: </label>
+    <input id="firstName" size="20" maxlength="250" type="text" formControlName="firstName">
+    <div *ngIf="form.get('firstName')?.invalid && (form.get('firstName')?.dirty || form.get('firstName')?.touched)">
+        <div *ngIf="form.get('firstName')?.hasError('required')">
+          <span class="errmsg">First Name is required.</span>
+        </div>
+        <div *ngIf="form.get('firstName')?.hasError('minlength')">
+            <span class="errmsg">Please enter a valid First Name with atleast 3 characters.</span>
+        </div>
+    </div>
+    <br>
+    <label for="lastName">Last Name: </label>
+    <input id="lastName" size="20" maxlength="250" type="text" formControlName="lastName">
+    <div *ngIf="form.get('lastName')?.invalid && (form.get('lastName')?.dirty || form.get('lastName')?.touched)">
+        <div *ngIf="form.get('lastName')?.hasError('required')">
+          <span class="errmsg">Last Name is required.</span>
+        </div>
+        <div *ngIf="form.get('lastName')?.hasError('minlength')">
+            <span class="errmsg">Please enter a Last Name with atleast 3 characters.</span>
+        </div>
+    </div>
+    <br>
+    <label for="email">Email: </label>
+    <input id="email" size="20" maxlength="250" type="text" formControlName="email">
+    <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)">
+        <div *ngIf="form.get('email')?.hasError('required')">
+            <span class="errmsg">Email is required.</span>
+        </div>
+        <div *ngIf="form.get('email')?.hasError('email')">
+            <span class="errmsg">Please enter a valid email address.</span>
+        </div>
+    </div>    
+    <br>
+    <label for="userStatus">User Status: </label>
+    <select formControlName="userStatus">
+        <option *ngFor="let status of userStatuses" value="{{ status }}">{{ status }}</option>
+      </select><br>
+    <label for="department">Department: </label>
+    <input id="department" size="20" maxlength="250" type="text" formControlName="department"><br>
 
-    <button class="flat-button" (click)="addUser($event)">Add User</button>
+    <button class="flat-button hvrPtr" type="submit">Add User</button>
 </form>

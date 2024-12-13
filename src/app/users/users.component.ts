@@ -59,7 +59,15 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  sendToUpdateUser(id: number | null, name: string): void {
-    this.router.navigate(['/users/:' + id], { state: { updatedUser: { name: name } } });
+  sendToUpdateUser(userId: number | null): void {
+    this.users$?.subscribe({
+      next: (users) => {
+        users.forEach(user => {
+          if (user.userId === userId) {
+            this.router.navigate(['/users/:' + userId], { state: { toUpdateUser: user } });
+          }  
+        })
+      }
+    })
   }
 }

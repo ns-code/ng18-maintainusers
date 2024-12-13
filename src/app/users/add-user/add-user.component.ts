@@ -1,38 +1,75 @@
-import { Component } from '@angular/core';
-// import {MatInputModule} from '@angular/material/input';
-// import {MatFormFieldModule} from '@angular/material/form-field';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {FormControl} from '@angular/forms';
-import { UsersService } from '../service/users.service';
+import { UsersService, UserStatuses } from '../service/users.service';
 import { User } from '../data/user.data';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   standalone: true,
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
   styleUrls: ['./../users.component.css', './add-user.component.css'],
-  imports: [FormsModule, ReactiveFormsModule]
-})
-export class AddUserComponent {
-  name = new FormControl('');
+  imports: [CommonModule, ReactiveFormsModule]
+})export class AddUserComponent implements OnInit {
 
-  constructor(private usersService: UsersService, private router: Router) {} 
+  form: FormGroup;
+  newUser: User | null = null;
 
-  addUser(e: any): void {
-    console.log('e: ', this.name.value);
-    const newUser = new User(null, this.name.value!);
-    this.usersService.createUser(newUser)?.subscribe({
+  userStatuses = Object.values(UserStatuses);
+  errmsg = "";
+
+  constructor(public usersService: UsersService, private router: Router,
+    private formBuilder: FormBuilder) {
+      this.form = this.formBuilder.group({
+        "userName": new FormControl("", [Validators.required, Validators.minLength(3)]),
+        "firstName": new FormControl("", [Validators.required, Validators.minLength(3)]),
+        "lastName": new FormControl("", [Validators.required, Validators.minLength(3)]),
+        "email": new FormControl("", [Validators.required, Validators.email]),
+        "userStatus": new FormControl("I"),
+        "department": new FormControl("")
+      });
+    } 
+
+  ngOnInit() {
+    this.errmsg = "";
+    this.form.get('userStatus')?.valueChanges.subscribe(value => {
+      console.log(">> userStatus: ", value);
+    });
+  }
+
+  onUserFormSubmit(): boolean {
+    if (!this.form.valid) {
+      this.errmsg = "Please enter valid field values, tab through the fields.";
+      return false;
+    }
+
+    this.newUser = new User(null, this.form.get("userName")?.value!, 
+    this.form.get("firstName")?.value!,
+    this.form.get("lastName")?.value!,
+    this.form.get("email")?.value!,
+    this.form.get("userStatus")?.value!,
+    this.form.get("department")?.value!);
+
+    console.log(">> calling createUser for the user: ", this.newUser);
+
+    this.usersService.createUser(this.newUser!)?.subscribe({
       next: (res: User) => {
         // can be ignored
         console.log(">> new user created: ", res);
         this.router.navigate(['/users']);
       },
-      error: (err: any) => {
+      error: (err: HttpErrorResponse) => {
         console.log(">> new user create error: ", err);
+        if (err.status === 409) {
+          this.errmsg = "User Name " + this.newUser?.userName + " already exists";
+        }
+        this.router.navigate(['/add-user']);
       },
-      complete: () => {}
-    });    
+      complete: () => { }
+    }); 
+    return true;  
   }
 }

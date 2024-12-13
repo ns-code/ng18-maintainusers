@@ -17,10 +17,4 @@ describe('UpdateUserComponent', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
-
-  // it(`should have the 'ng18-app2' title`, () => {
-  //   const fixture = TestBed.createComponent(UsersComponent);
-  //   const comp = fixture.componentInstance;
-  //   expect(comp.deleteUserRes$).toEqual('ng18-app2');
-  // });
 });
