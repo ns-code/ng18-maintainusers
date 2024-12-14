@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../data/user.data';
+import { FormControl, FormGroupDirective, NgForm } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 @Injectable({
   providedIn: 'root'
@@ -34,3 +36,16 @@ export class UsersService {
 export enum UserStatuses {
   I = "I", A = "A", T = "T"
 }
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
+
+export const USER_STATUSES = [{label: "I - Inactive", value: "I"},
+  {label: "A - Active", value: "A"},
+  {label: "T - Terminated", value: "T"},
+ ];

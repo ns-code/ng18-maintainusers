@@ -1,24 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {FormControl} from '@angular/forms';
-import { UsersService, UserStatuses } from '../service/users.service';
+import { MyErrorStateMatcher, USER_STATUSES, UsersService } from '../service/users.service';
 import { User } from '../data/user.data';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
 
 @Component({
   standalone: true,
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
   styleUrls: ['./../users.component.css', './add-user.component.css'],
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [CommonModule, RouterLink, FormsModule, ReactiveFormsModule, MatIconModule, MatSelectModule, MatFormFieldModule, MatButtonModule, MatInputModule]
 })export class AddUserComponent implements OnInit {
 
   form: FormGroup;
+  matcher = new MyErrorStateMatcher();
+  
   newUser: User | null = null;
 
-  userStatuses = Object.values(UserStatuses);
+  userStatuses = USER_STATUSES;
   errmsg = "";
 
   constructor(public usersService: UsersService, private router: Router,
@@ -35,6 +42,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
   ngOnInit() {
     this.errmsg = "";
+    console.log(">> userStatuses: ", this.userStatuses);
     this.form.get('userStatus')?.valueChanges.subscribe(value => {
       console.log(">> userStatus: ", value);
     });
@@ -42,7 +50,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
   onUserFormSubmit(): boolean {
     if (!this.form.valid) {
-      this.errmsg = "Please enter valid field values, tab through the fields.";
+      this.errmsg = "Please enter valid field values.";
       return false;
     }
 

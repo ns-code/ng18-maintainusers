@@ -1,24 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
-import { UsersService, UserStatuses } from '../service/users.service';
+import { MyErrorStateMatcher, USER_STATUSES, UsersService } from '../service/users.service';
 import { User } from '../data/user.data';
 import { Observable } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
+
 
 @Component({
   standalone: true,
   selector: 'app-update-user',
   templateUrl: './update-user.component.html',
   styleUrls: ['./update-user.component.css', './../users.component.css'],
-  imports: [CommonModule, ReactiveFormsModule]
+  imports: [CommonModule, RouterLink, FormsModule, ReactiveFormsModule, MatSelectModule, MatFormFieldModule, MatButtonModule, MatInputModule]
 })
 export class UpdateUserComponent implements OnInit {
 
   form: FormGroup;
-
-  userStatuses = Object.values(UserStatuses);
+  matcher = new MyErrorStateMatcher();
+  
+  userStatuses = USER_STATUSES;
   errmsg = "";
   users$: Observable<User[]> | null = null;
   userId: number | null = null;
@@ -67,7 +73,7 @@ export class UpdateUserComponent implements OnInit {
   onUserFormUpdateSubmit(): boolean {
     console.log(">> e: ", this.form.valid, this.form.value);
     if (!this.form.valid) {
-      this.errmsg = "Please enter valid field values, tab through the fields.";
+      this.errmsg = "Please enter valid field values.";
       return false;
     }
     

@@ -1,57 +1,69 @@
 <h3>Add User</h3>
 
-<div class="errmsg">{{ errmsg }}</div>
-<form class="user-form" [formGroup]="form" (ngSubmit)="onUserFormSubmit()">
-    <label for="userName">User Name: </label>
-    <input id="userName" size="20" maxlength="250" type="text" formControlName="userName">
-    <div *ngIf="form.get('userName')?.invalid && (form.get('userName')?.dirty || form.get('userName')?.touched)">
-        <div *ngIf="form.get('userName')?.hasError('required')">
-          <span class="errmsg">User Name is required.</span>
-        </div>
-        <div *ngIf="form.get('userName')?.hasError('minlength')">
-            <span class="errmsg">Please enter a valid User Name with atleast 3 characters.</span>
-        </div>
-    </div>
-    <br>
-    <label for="firstName">First Name: </label>
-    <input id="firstName" size="20" maxlength="250" type="text" formControlName="firstName">
-    <div *ngIf="form.get('firstName')?.invalid && (form.get('firstName')?.dirty || form.get('firstName')?.touched)">
-        <div *ngIf="form.get('firstName')?.hasError('required')">
-          <span class="errmsg">First Name is required.</span>
-        </div>
-        <div *ngIf="form.get('firstName')?.hasError('minlength')">
-            <span class="errmsg">Please enter a valid First Name with atleast 3 characters.</span>
-        </div>
-    </div>
-    <br>
-    <label for="lastName">Last Name: </label>
-    <input id="lastName" size="20" maxlength="250" type="text" formControlName="lastName">
-    <div *ngIf="form.get('lastName')?.invalid && (form.get('lastName')?.dirty || form.get('lastName')?.touched)">
-        <div *ngIf="form.get('lastName')?.hasError('required')">
-          <span class="errmsg">Last Name is required.</span>
-        </div>
-        <div *ngIf="form.get('lastName')?.hasError('minlength')">
-            <span class="errmsg">Please enter a Last Name with atleast 3 characters.</span>
-        </div>
-    </div>
-    <br>
-    <label for="email">Email: </label>
-    <input id="email" size="20" maxlength="250" type="text" formControlName="email">
-    <div *ngIf="form.get('email')?.invalid && (form.get('email')?.dirty || form.get('email')?.touched)">
-        <div *ngIf="form.get('email')?.hasError('required')">
-            <span class="errmsg">Email is required.</span>
-        </div>
-        <div *ngIf="form.get('email')?.hasError('email')">
-            <span class="errmsg">Please enter a valid email address.</span>
-        </div>
-    </div>    
-    <br>
-    <label for="userStatus">User Status: </label>
-    <select formControlName="userStatus">
-        <option *ngFor="let status of userStatuses" value="{{ status }}">{{ status }}</option>
-      </select><br>
-    <label for="department">Department: </label>
-    <input id="department" size="20" maxlength="250" type="text" formControlName="department"><br>
 
-    <button class="flat-button hvrPtr" type="submit">Add User</button>
+<form class="user-form" [formGroup]="form" (ngSubmit)="onUserFormSubmit()">
+    <div class="errmsg">{{ errmsg }}</div>
+  <mat-form-field>
+    <mat-label>User Name</mat-label>
+    <input type="text" matInput formControlName="userName" [errorStateMatcher]="matcher" placeholder="">
+    <mat-error *ngIf="form.get('userName')?.hasError('required')">
+      User Name is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="form.get('userName')?.hasError('minlength')">
+      User Name must be atleast 3 chars
+    </mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>First Name</mat-label>
+    <input type="text" matInput formControlName="firstName" [errorStateMatcher]="matcher" placeholder="">
+    <mat-error *ngIf="form.get('firstName')?.hasError('required')">
+      First Name is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="form.get('firstName')?.hasError('minlength')">
+      First Name must be atleast 3 chars
+    </mat-error>
+  </mat-form-field>
+  <br>
+    <mat-form-field>
+      <mat-label>Last Name</mat-label>
+      <input type="text" matInput formControlName="lastName" [errorStateMatcher]="matcher"
+             placeholder="">
+      <mat-error *ngIf="form.get('lastName')?.hasError('required')">
+        Last Name is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="form.get('lastName')?.hasError('minlength')">
+        Last Name must be atleast 3 chars
+      </mat-error>
+    </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input type="text" matInput formControlName="email" [errorStateMatcher]="matcher" placeholder="">
+    <mat-error *ngIf="form.get('email')?.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="form.get('email')?.hasError('email')">
+      Please enter a valid email
+    </mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>User Status</mat-label>
+    <mat-select formControlName="userStatus"> 
+      <mat-option *ngFor="let status of userStatuses" [value]="status.value">
+        {{ status.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+  <br>
+  <mat-form-field>
+    <mat-label>Department</mat-label>
+    <input type="text" matInput formControlName="department" [errorStateMatcher]="matcher" placeholder="">
+  </mat-form-field>
+  <br>
+  <button mat-flat-button type="submit">Add User</button> &nbsp; 
+  <button mat-flat-button type="button" (click)="form.reset()">Reset</button> &nbsp; 
+  <button mat-flat-button type="button" routerLink="/users">Cancel</button>
 </form>
