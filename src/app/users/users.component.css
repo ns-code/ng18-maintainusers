@@ -42,8 +42,13 @@ mat-form-field {
 
 .mdc-button {
     float: none;
+    border: 2px;
 }
 
 .mdc-button:hover {
     background-color: rgb(233, 96, 171);
+}
+
+.ns-btn {
+    border: 2px solid blue !important;
 }
