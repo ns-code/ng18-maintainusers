@@ -8,8 +8,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class UserMockService {
   users: User[] = [
-    { userId: 1, userName: 'user1', firstName: "fn1", lastName: "ln1", email: "e1@test.com", userStatus: "I", department: "" },
-    { userId: 2, userName: 'user2', firstName: "fn2", lastName: "ln2", email: "e2@test.com", userStatus: "A", department: "" }
+    { userId: 1n, userName: 'user1', firstName: "fn1", lastName: "ln1", email: "e1@test.com", userStatus: "I", department: "" },
+    { userId: 2n, userName: 'user2', firstName: "fn2", lastName: "ln2", email: "e2@test.com", userStatus: "A", department: "" }
 ];
   
   getUsers() {
@@ -17,7 +17,7 @@ export class UserMockService {
   }
 
   createUser(newUser: User): Observable<User> | null {    
-    newUser.userId = this.users.length + 1;
+    newUser.userId = BigInt(this.users.length + 1);
     const existingUsers = this.users.map(u => u.userName);
     if (existingUsers.includes(newUser.userName)) {
       const mockErrorResponse = new HttpErrorResponse({
@@ -31,8 +31,8 @@ export class UserMockService {
     }
   } 
 
-  updateUser(id: number, updatedUser: User): Observable<any> {    
-    updatedUser.userId = 1;
+  updateUser(id: bigint, updatedUser: User): Observable<any> {    
+    updatedUser.userId = 1n;
     this.users = this.users.map(u => {
       if (u.userId === id) {
         return updatedUser;
@@ -42,7 +42,7 @@ export class UserMockService {
     return of();
   } 
   
-  deleteUser(id: number): Observable<any> {   
+  deleteUser(id: bigint): Observable<any> {   
     this.users = this.users.filter(u => u.userId !== id);
     return of();
   }  

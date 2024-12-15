@@ -22,12 +22,12 @@ export class UsersService {
     return this.http.post<User>(this.API_BASE_URL + '/users', newUser);
   }   
 
-  updateUser(userId: number, updatedUser: User): Observable<User> {
+  updateUser(userId: bigint, updatedUser: User): Observable<User> {
     const url = `/users/${userId}`;
     return this.http.put<User>(this.API_BASE_URL + url, updatedUser);
   }   
 
-  deleteUser(userId: number): Observable<any> {
+  deleteUser(userId: bigint): Observable<any> {
     const url = `/users/${userId}`;
     return this.http.delete<any>(this.API_BASE_URL + url);
   }  

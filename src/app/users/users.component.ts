@@ -22,7 +22,7 @@ export class UsersComponent implements OnInit {
   users: User[] = [];
   users$: Observable<User[]> | null = null;
   myForm: FormGroup;
-  toDeleteIds = new Set<number>();
+  toDeleteIds = new Set<bigint>();
   deleteUserRes$: Observable<any>[] = [];
 
   constructor(private usersService: UsersService, private fb: FormBuilder,
@@ -40,8 +40,8 @@ export class UsersComponent implements OnInit {
     this.users$ = this.usersService.getUsers();
   }
 
-  onCheckboxChange(e: any, id: number): void {
-    this.toDeleteIds.add(id);
+  onCheckboxChange(e: any, userId: bigint): void {
+    this.toDeleteIds.add(userId);
   }
 
   deleteSelectedIds(): void {
@@ -59,7 +59,7 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  sendToUpdateUser(userId: number | null): void {
+  sendToUpdateUser(userId: bigint | null): void {
     this.users$?.subscribe({
       next: (users) => {
         users.forEach(user => {

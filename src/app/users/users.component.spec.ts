@@ -40,8 +40,8 @@ describe('UsersComponent', () => {
 
     component.users$?.subscribe(value => {
       expect(value).toEqual([
-        { userId: 1, userName: 'user1', firstName: "fn1", lastName: "ln1", email: "e1@test.com", userStatus: "I", department: "" },
-        { userId: 2, userName: 'user2', firstName: "fn2", lastName: "ln2", email: "e2@test.com", userStatus: "A", department: "" }
+        { userId: 1n, userName: 'user1', firstName: "fn1", lastName: "ln1", email: "e1@test.com", userStatus: "I", department: "" },
+        { userId: 2n, userName: 'user2', firstName: "fn2", lastName: "ln2", email: "e2@test.com", userStatus: "A", department: "" }
       ]); 
     });    
   });  
@@ -52,7 +52,7 @@ describe('UsersComponent', () => {
     const component = fixture.componentInstance;
 
     component.ngOnInit(); 
-    component.toDeleteIds.add(1);
+    component.toDeleteIds.add(1n);
     component.deleteSelectedIds();
   
     component.ngOnInit();
@@ -94,7 +94,7 @@ it('should add a new user', () => {
     const updateUserComponent = TestBed.createComponent(UpdateUserComponent);
     const updateUserComponentInst = updateUserComponent.componentInstance;
 
-    updateUserComponentInst.userId = 1;
+    updateUserComponentInst.userId = 1n;
     updateUserComponentInst.onUserFormUpdateSubmit();
 
     component.ngOnInit();

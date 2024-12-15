@@ -1,5 +1,5 @@
 interface IUser {
-    userId: number | null;
+    userId: bigint | null;
     userName: string;
     firstName: string;
     lastName: string;
@@ -9,7 +9,7 @@ interface IUser {
 }
 
 export class User implements IUser {
-    constructor(public userId: number | null,
+    constructor(public userId: bigint | null,
         public userName: string,
         public firstName: string,
         public lastName: string,

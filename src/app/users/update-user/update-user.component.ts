@@ -27,7 +27,7 @@ export class UpdateUserComponent implements OnInit {
   userStatuses = USER_STATUSES;
   errmsg = "";
   users$: Observable<User[]> | null = null;
-  userId: number | null = null;
+  userId: bigint | null = null;
   userIdStr = '';
   toUpdateUser: User | null = null;
 
@@ -46,7 +46,7 @@ export class UpdateUserComponent implements OnInit {
     this.route.params.subscribe({
       next: (params) => {
         this.userIdStr = params['id'];
-        this.userId = Number(this.userIdStr.replace(':', ''));
+        this.userId = BigInt(this.userIdStr.replace(':', ''));
         console.log(">> userId: ", this.userId);
         this.toUpdateUser = this.router.getCurrentNavigation()?.extras.state?.['toUpdateUser'];
         console.log(">> toUpdUser: ", this.toUpdateUser);
@@ -77,7 +77,7 @@ export class UpdateUserComponent implements OnInit {
       return false;
     }
     
-    this.toUpdateUser = new User(this.userId, this.form.get("userName")?.value!, 
+    this.toUpdateUser = new User(null, this.form.get("userName")?.value!, 
     this.form.get("firstName")?.value!,
     this.form.get("lastName")?.value!,
     this.form.get("email")?.value!,
