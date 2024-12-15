@@ -3,12 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatButtonModule} from '@angular/material/button';
-import { UsersService } from './service/users.service';
 import { forkJoin, Observable } from 'rxjs';
-import { User } from './data/user.data';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FormBuilder, FormGroup, FormArray, FormControl} from '@angular/forms';
-
+import { User } from './data/user.data';
+import { UsersService } from './service/users.service';
 
 @Component({
   standalone: true,

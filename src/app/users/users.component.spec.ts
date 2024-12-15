@@ -7,6 +7,7 @@ import { UserMockService } from './service/user.mockservice';
 import { UsersService } from './service/users.service';
 import { AddUserComponent } from './add-user/add-user.component';
 import { UpdateUserComponent } from './update-user/update-user.component';
+import { User } from './data/user.data';
 
 describe('UsersComponent', () => {
   beforeEach(async () => {
@@ -73,7 +74,17 @@ it('should add a new user', () => {
     const addUserComponent = TestBed.createComponent(AddUserComponent);
     const addUserComponentInst = addUserComponent.componentInstance;
 
-    addUserComponentInst.onUserFormSubmit();
+    const capturedUser: User = {
+      userId: null,
+      userName: "user1",
+      firstName: "fn2",
+      lastName: "ln2",
+      email: "user2@test.com",
+      userStatus: "I",
+      department: ""
+    };
+    addUserComponentInst.captureSubmittedUser(capturedUser);
+    addUserComponentInst.handleFormSubmission(null);
 
     component.ngOnInit();
   
@@ -95,7 +106,17 @@ it('should add a new user', () => {
     const updateUserComponentInst = updateUserComponent.componentInstance;
 
     updateUserComponentInst.userId = 1n;
-    updateUserComponentInst.onUserFormUpdateSubmit();
+    const capturedUser: User = {
+      userId: updateUserComponentInst.userId,
+      userName: "user1",
+      firstName: "fn2",
+      lastName: "ln2",
+      email: "user2@test.com",
+      userStatus: "I",
+      department: ""
+    };
+    updateUserComponentInst.captureSubmittedUser(capturedUser);
+    updateUserComponentInst.handleFormSubmission(null);
 
     component.ngOnInit();
   
