@@ -5,7 +5,7 @@
     <div class="errmsg">{{ errmsg }}</div>
   <mat-form-field>
     <mat-label>User Name</mat-label>
-    <input type="text" matInput formControlName="userName" [errorStateMatcher]="matcher" placeholder="">
+    <input type="text" class="user-name-input" matInput formControlName="userName" [errorStateMatcher]="matcher" placeholder="">
     <mat-error *ngIf="form.get('userName')?.hasError('required')">
       User Name is <strong>required</strong>
     </mat-error>
@@ -16,7 +16,7 @@
   <br>
   <mat-form-field>
     <mat-label>First Name</mat-label>
-    <input type="text" matInput formControlName="firstName" [errorStateMatcher]="matcher" placeholder="">
+    <input type="text" class="first-name-input" matInput formControlName="firstName" [errorStateMatcher]="matcher" placeholder="">
     <mat-error *ngIf="form.get('firstName')?.hasError('required')">
       First Name is <strong>required</strong>
     </mat-error>
@@ -27,7 +27,7 @@
   <br>
     <mat-form-field>
       <mat-label>Last Name</mat-label>
-      <input type="text" matInput formControlName="lastName" [errorStateMatcher]="matcher"
+      <input type="text"  class="last-name-input" matInput formControlName="lastName" [errorStateMatcher]="matcher"
              placeholder="">
       <mat-error *ngIf="form.get('lastName')?.hasError('required')">
         Last Name is <strong>required</strong>
@@ -39,7 +39,7 @@
   <br>
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input type="text" matInput formControlName="email" [errorStateMatcher]="matcher" placeholder="">
+    <input type="text"  class="email-input" matInput formControlName="email" [errorStateMatcher]="matcher" placeholder="">
     <mat-error *ngIf="form.get('email')?.hasError('required')">
       Email is <strong>required</strong>
     </mat-error>
@@ -50,7 +50,7 @@
   <br>
   <mat-form-field>
     <mat-label>User Status</mat-label>
-    <mat-select formControlName="userStatus"> 
+    <mat-select formControlName="userStatus"  class="user-status-select"> 
       <mat-option *ngFor="let status of userStatuses" [value]="status.value">
         {{ status.label }}
       </mat-option>
@@ -60,7 +60,7 @@
   <br>
   <mat-form-field>
     <mat-label>Department</mat-label>
-    <input type="text" matInput formControlName="department" [errorStateMatcher]="matcher" placeholder="">
+    <input type="text"  class="department-input" matInput formControlName="department" [errorStateMatcher]="matcher" placeholder="">
   </mat-form-field>
   <br>
   <button mat-flat-button class="ns-btn" type="submit">{{ formAction }} User</button> &nbsp; 
