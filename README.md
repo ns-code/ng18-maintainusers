@@ -16,3 +16,7 @@ Run `ng e2e` to run the Cypress e2e integration test cases. (If you have a diffe
 ### Usage
 
 With the above-mentioned API server running, run 'ng serve' (or 'npx ng run'). The app can then be accessed using http://localhost:4200
+
+## Screenshots
+
+https://github.com/ns-code/ng18-maintainusers-refactored/wiki/Home---Screenshots
